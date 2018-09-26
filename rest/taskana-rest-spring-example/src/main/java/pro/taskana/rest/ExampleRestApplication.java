@@ -40,6 +40,9 @@ public class ExampleRestApplication {
 
     @Value("${generateSampleData:true}")
     public boolean generateSampleData;
+    
+    @Value("${datasource.url:'jdbc:h2:mem:taskana;IGNORECASE=TRUE;LOCK_MODE=0'}")
+    public String dataSourceUrl;
 
     @Autowired
     private SampleDataGenerator sampleDataGenerator;
@@ -58,7 +61,7 @@ public class ExampleRestApplication {
     @ConfigurationProperties(prefix = "datasource")
     public DataSourceProperties dataSourceProperties() {
         DataSourceProperties props = new DataSourceProperties();
-        props.setUrl("jdbc:h2:mem:taskana;IGNORECASE=TRUE;LOCK_MODE=0;INIT=CREATE SCHEMA IF NOT EXISTS " + schemaName);
+        props.setUrl(dataSourceUrl + ";INIT=CREATE SCHEMA IF NOT EXISTS " + schemaName);
         return props;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -59,6 +60,7 @@ public class ExampleRestApplication {
     public DataSourceProperties dataSourceProperties() {
         DataSourceProperties props = new DataSourceProperties();
         props.setUrl("jdbc:h2:mem:taskana;IGNORECASE=TRUE;LOCK_MODE=0;INIT=CREATE SCHEMA IF NOT EXISTS " + schemaName);
+//        props.setUrl("jdbc:db2://localhost:50000/GENERALI");
         return props;
     }
 
@@ -86,6 +88,9 @@ public class ExampleRestApplication {
         }
         if (generateSampleData) {
             sampleDataGenerator.generateSampleData(schemaName);
+        }
+        if (generateSampleData) {
+        	sampleDataGenerator.generateSampleData(schemaName);
         }
     }
 }

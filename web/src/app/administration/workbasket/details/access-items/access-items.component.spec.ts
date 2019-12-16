@@ -27,7 +27,8 @@ import { FormsValidatorService } from 'app/shared/services/forms/forms-validator
 describe('AccessItemsComponent', () => {
   let component: AccessItemsComponent;
   let fixture: ComponentFixture<AccessItemsComponent>;
-  let workbasketService, debugElement, alertService, accessIdsService, formsValidatorService;
+  let workbasketService; let debugElement; let alertService;
+  let accessIdsService; let formsValidatorService;
 
 
   beforeEach(done => {
@@ -45,20 +46,21 @@ describe('AccessItemsComponent', () => {
       component.workbasket = new Workbasket('1');
       component.workbasket.type = ICONTYPES.TOPIC;
       component.workbasket._links = new Links()
-      component.workbasket._links.accessItems = { 'href': 'someurl' };
+      component.workbasket._links.accessItems = { href: 'someurl' };
 
       workbasketService = TestBed.get(WorkbasketService);
       alertService = TestBed.get(AlertService);
       spyOn(workbasketService, 'getWorkBasketAccessItems').and.returnValue(of(new WorkbasketAccessItemsResource(
-           new Array<WorkbasketAccessItems>(
-            new WorkbasketAccessItems('id1', '1', 'accessID1', '', false, false, false, false, false, false, false, false,
-              false, false, false, false, false, false, false, false, false),
-            new WorkbasketAccessItems('id2', '1', 'accessID2'))
-        , new Links({ 'href': 'someurl' })
+        new Array<WorkbasketAccessItems>(
+          new WorkbasketAccessItems('id1', '1', 'accessID1', '', false, false, false, false, false, false, false, false,
+            false, false, false, false, false, false, false, false, false),
+          new WorkbasketAccessItems('id2', '1', 'accessID2')
+        ),
+        new Links({ href: 'someurl' })
       )));
       spyOn(workbasketService, 'updateWorkBasketAccessItem').and.returnValue(of(true)),
-        spyOn(alertService, 'triggerAlert').and.returnValue(of(true)),
-        debugElement = fixture.debugElement.nativeElement;
+      spyOn(alertService, 'triggerAlert').and.returnValue(of(true)),
+      debugElement = fixture.debugElement.nativeElement;
       accessIdsService = TestBed.get(AccessIdsService);
       spyOn(accessIdsService, 'getAccessItemsInformation').and.returnValue(of(new Array<string>(
         'accessID1', 'accessID2'
@@ -101,7 +103,8 @@ describe('AccessItemsComponent', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(alertService.triggerAlert).toHaveBeenCalledWith(
-        new AlertModel(AlertType.SUCCESS, `Workbasket  ${component.workbasket.key} Access items were saved successfully`));
+        new AlertModel(AlertType.SUCCESS, `Workbasket  ${component.workbasket.key} Access items were saved successfully`)
+      );
     })
     fixture.detectChanges();
   }));

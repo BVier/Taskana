@@ -33,7 +33,8 @@ export class TaskQueryComponent implements OnInit {
     private taskQueryService: TaskQueryService,
     private orientationService: OrientationService,
     private generalModalService: GeneralModalService,
-    private requestInProgressService: RequestInProgressService, ) { }
+    private requestInProgressService: RequestInProgressService,
+  ) { }
 
   ngOnInit() {
     this.orientationSubscription = this.orientationService.getOrientation().subscribe((orientation: Orientation) => {
@@ -101,7 +102,7 @@ export class TaskQueryComponent implements OnInit {
   }
 
   isDate(fieldName: string): boolean {
-      return (fieldName === 'created')
+    return (fieldName === 'created')
   }
 
   filterFieldsToAllowQuerying(fieldName: string): boolean {
@@ -178,24 +179,25 @@ export class TaskQueryComponent implements OnInit {
     this.requestInProgressService.setRequestInProgress(true);
     this.calculateQueryPages();
     this.taskQuerySubscription = this.taskQueryService.queryTask(
-      this.orderBy.sortBy.replace(/([A-Z])|([0-9])/g, (g) => `-${g[0].toLowerCase()}`),
+      this.orderBy.sortBy.replace(/([A-Z])|([0-9])/g, g => `-${g[0].toLowerCase()}`),
       this.orderBy.sortDirection,
       new TaskHistoryEventData(this.taskQueryForm.value),
-      false).subscribe(taskQueryResource => {
-        this.requestInProgressService.setRequestInProgress(false);
-        if (!taskQueryResource.taskHistoryEvents) {
-          this.taskQuery = null;
-          this.taskQueryResource = null;
-          return null;
-        }
-        this.taskQueryResource = taskQueryResource;
-        this.taskQuery = taskQueryResource.taskHistoryEvents;
-      })
+      false
+    ).subscribe(taskQueryResource => {
+      this.requestInProgressService.setRequestInProgress(false);
+      if (!taskQueryResource.taskHistoryEvents) {
+        this.taskQuery = null;
+        this.taskQueryResource = null;
+        return null;
+      }
+      this.taskQueryResource = taskQueryResource;
+      this.taskQuery = taskQueryResource.taskHistoryEvents;
+    })
   }
 
   private initTaskQueryForm() {
     const me = this;
-    Object.keys(new TaskHistoryEventData()).forEach(function (key) {
+    Object.keys(new TaskHistoryEventData()).forEach(key => {
       me.taskQueryForm.addControl(key, new FormControl());
     });
   }
@@ -211,8 +213,8 @@ export class TaskQueryComponent implements OnInit {
   }
 
   updateDate($event: string) {
-      this.taskQueryForm.get('created').setValue($event.substring(0, 10));
-      this.performRequest();
+    this.taskQueryForm.get('created').setValue($event.substring(0, 10));
+    this.performRequest();
   }
 
   onDestroy() {

@@ -20,7 +20,8 @@ import { configureTests } from 'app/app.test.configuration';
 describe('NavBarComponent', () => {
   let component: NavBarComponent;
   let fixture: ComponentFixture<NavBarComponent>;
-  let debugElement, navBar;
+  let debugElement;
+  let navBar;
 
   const routes: Routes = [
     { path: 'classifications', component: NavBarComponent }
@@ -65,7 +66,7 @@ describe('NavBarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title ''`, (() => {
+  it('should have as title \'\'', (() => {
     expect(navBar.title).toEqual('');
   }));
 

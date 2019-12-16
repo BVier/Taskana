@@ -14,9 +14,8 @@ export class HttpClientInterceptor implements HttpInterceptor {
 
   constructor(
     private generalModalService: GeneralModalService,
-    private requestInProgressService: RequestInProgressService) {
-
-  }
+    private requestInProgressService: RequestInProgressService
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({ headers: req.headers.set('Content-Type', 'application/hal+json') });
@@ -27,12 +26,14 @@ export class HttpClientInterceptor implements HttpInterceptor {
       this.requestInProgressService.setRequestInProgress(false);
       if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)) {
         this.generalModalService.triggerMessage(
-          new MessageModal('You have no access to this resource ', error));
+          new MessageModal('You have no access to this resource ', error)
+        );
       } else if (error instanceof HttpErrorResponse && (error.status === 404) && error.url.indexOf('environment-information.json')) {
         // ignore this error message
       } else {
         this.generalModalService.triggerMessage(
-          new MessageModal('There was error, please contact with your administrator ', error))
+          new MessageModal('There was error, please contact with your administrator ', error)
+        )
       }
     }))
   }

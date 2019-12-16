@@ -43,7 +43,6 @@ export class WorkbasketDetailsComponent implements OnInit, OnDestroy {
     private importExportService: ImportExportService) { }
 
 
-
   ngOnInit() {
     this.workbasketSelectedSubscription = this.service.getSelectedWorkBasket().subscribe(workbasketIdSelected => {
       delete this.workbasket;
@@ -51,7 +50,7 @@ export class WorkbasketDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.routeSubscription = this.route.params.subscribe(params => {
-      const id = params['id'];
+      const {id} = params;
       delete this.action;
       if (id) {
         if (id.indexOf('new-workbasket') !== -1) {
@@ -117,7 +116,8 @@ export class WorkbasketDetailsComponent implements OnInit, OnDestroy {
         this.checkDomainAndRedirect();
       }, err => {
         this.generalModalService.triggerMessage(
-          new MessageModal('An error occurred while fetching the workbasket', err));
+          new MessageModal('An error occurred while fetching the workbasket', err)
+        );
       });
     }
   }

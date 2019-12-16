@@ -46,8 +46,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private orientationService: OrientationService,
     private selectedRouteService: SelectedRouteService,
     private formsValidatorService: FormsValidatorService,
-    public uploadService: UploadService) {
-  }
+    public uploadService: UploadService
+  ) { }
 
   ngOnInit() {
     this.routerSubscription = this.router.events.subscribe(event => {
@@ -63,8 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
       } else if (messageModal.message.error instanceof ProgressEvent) {
         this.modalMessage = messageModal.message.message;
       } else {
-        this.modalMessage = messageModal.message.error ?
-          (messageModal.message.error.error + ' ' + messageModal.message.error.message)
+        this.modalMessage = messageModal.message.error
+          ? (`${messageModal.message.error.error} ${messageModal.message.error.message}`)
           : messageModal.message.message;
       }
       this.modalTitle = messageModal.title;

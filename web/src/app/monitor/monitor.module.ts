@@ -21,10 +21,7 @@ import {MapToIterable} from '../shared/pipes/mapToIterable/mapToIterable';
 import {MonitorWorkbasketsComponent} from './workbasket/monitor-workbaskets.component';
 import {MonitorWorkbasketPlannedDateComponent} from './workbasket/workbasket-planned-date/monitor-workbasket-planned-date.component';
 import {MonitorWorkbasketDueDateComponent} from './workbasket/monitor-workbasket-due-date/monitor-workbasket-due-date.component';
-import {
-  MonitorWorkbasketQuerySwitcherComponent
-} from './workbasket/monitor-workbasket-query-switcher/monitor-workbasket-query-switcher.component';
-
+import {MonitorWorkbasketQuerySwitcherComponent} from './workbasket/monitor-workbasket-query-switcher/monitor-workbasket-query-switcher.component';
 
 
 const MODULES = [

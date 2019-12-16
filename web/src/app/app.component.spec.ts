@@ -10,7 +10,9 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 describe('AppComponent', () => {
 
-  let app, fixture, debugElement;
+  let app;
+  let fixture;
+  let debugElement;
 
   const routes: Routes = [
     { path: 'classifications', component: AppComponent }
@@ -53,7 +55,7 @@ describe('AppComponent', () => {
 
     expect(app.workbasketsRoute).toBe(true);
     fixture.detectChanges();
-    router.navigateByUrl(`/classifications`);
+    router.navigateByUrl('/classifications');
     expect(app.workbasketsRoute).toBe(false);
 
   })));

@@ -13,11 +13,12 @@ describe('StartupService', () => {
   const someRestUrl = 'someRestUrl';
   const someLogoutUrl = 'someLogoutUrl';
   const dummyEnvironmentInformation = {
-    'taskanaRestUrl': someRestUrl,
-    'taskanaLogoutUrl': someLogoutUrl
+    taskanaRestUrl: someRestUrl,
+    taskanaLogoutUrl: someLogoutUrl
   };
 
-  let httpMock, service;
+  let httpMock;
+  let service;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -46,10 +47,10 @@ describe('StartupService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should initialize rest and logout url from external file', (done) => {
+  it('should initialize rest and logout url from external file', done => {
     environment.taskanaRestUrl = '';
     environment.taskanaLogoutUrl = '';
-    service.getEnvironmentFilePromise().then((res) => {
+    service.getEnvironmentFilePromise().then(res => {
       expect(environment.taskanaRestUrl).toBe(someRestUrl);
       expect(environment.taskanaLogoutUrl).toBe(someLogoutUrl);
       done();

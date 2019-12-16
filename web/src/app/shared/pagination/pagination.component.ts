@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import { Page } from 'app/models/page';
 
 @Component({
@@ -58,7 +50,7 @@ export class PaginationComponent implements OnChanges {
     if (!this.page) {
       return '';
     }
-    const text = this.numberOfItems + '';
+    const text = `${this.numberOfItems}`;
     return `${text} of ${this.page.totalElements} ${this.type}`;
   }
 }

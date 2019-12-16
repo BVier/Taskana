@@ -20,7 +20,7 @@ describe('AccessItemsManagementComponent', () => {
       testBed.configureTestingModule({
         imports: [],
         declarations: [AccessItemsManagementComponent],
-        providers: [ AccessIdsService, FormsValidatorService]
+        providers: [AccessIdsService, FormsValidatorService]
       })
     };
 

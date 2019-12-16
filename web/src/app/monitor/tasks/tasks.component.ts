@@ -18,8 +18,8 @@ export class TasksComponent implements OnInit {
 
   constructor(
     private restConnectorService: RestConnectorService,
-    private requestInProgressService: RequestInProgressService) {
-  }
+    private requestInProgressService: RequestInProgressService
+  ) { }
 
   async ngOnInit() {
     this.requestInProgressService.setRequestInProgress(true);

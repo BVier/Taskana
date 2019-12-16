@@ -11,9 +11,9 @@ xdescribe('AttributeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [ TaskdetailsAttributeComponent ]
+      declarations: [TaskdetailsAttributeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

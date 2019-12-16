@@ -8,82 +8,83 @@ import { NgForm } from '@angular/forms';
 import { DomainService } from 'app/services/domain/domain.service';
 
 @Component({
-    selector: 'taskana-task-details-general-fields',
-    templateUrl: './general-fields.component.html',
-    styleUrls: ['./general-fields.component.scss']
+  selector: 'taskana-task-details-general-fields',
+  templateUrl: './general-fields.component.html',
+  styleUrls: ['./general-fields.component.scss']
 })
 export class TaskdetailsGeneralFieldsComponent implements OnInit, OnChanges {
 
-    @Input()
-    task: Task;
-    @Output() taskChange: EventEmitter<Task> = new EventEmitter<Task>();
+  @Input()
+  task: Task;
+  @Output() taskChange: EventEmitter<Task> = new EventEmitter<Task>();
 
-    @Input()
-    saveToggleTriggered: boolean;
-    @Output() formValid: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input()
+  saveToggleTriggered: boolean;
+  @Output() formValid: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('TaskForm', { static: false })
-    taskForm: NgForm;
+  @ViewChild('TaskForm', { static: false })
+  taskForm: NgForm;
 
-    toogleValidationMap = new Map<string, boolean>();
-    requestInProgress = false;
-    classifications: Classification[];
+  toogleValidationMap = new Map<string, boolean>();
+  requestInProgress = false;
+  classifications: Classification[];
 
-    ownerField = this.customFieldsService.getCustomField(
-        'Owner',
-        'tasks.information.owner'
-    );
+  ownerField = this.customFieldsService.getCustomField(
+    'Owner',
+    'tasks.information.owner'
+  );
 
-    constructor(
-        private classificationService: ClassificationsService,
-        private customFieldsService: CustomFieldsService,
-        private formsValidatorService: FormsValidatorService,
-        private domainService: DomainService) {
+  constructor(
+    private classificationService: ClassificationsService,
+    private customFieldsService: CustomFieldsService,
+    private formsValidatorService: FormsValidatorService,
+    private domainService: DomainService
+  ) {
+  }
+
+  ngOnInit() {
+    this.getClassificationByDomain();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.saveToggleTriggered && changes.saveToggleTriggered.currentValue !== changes.saveToggleTriggered.previousValue) {
+      this.validate();
     }
+  }
 
-    ngOnInit() {
-        this.getClassificationByDomain();
+  selectClassification(classification: Classification) {
+    this.task.classificationSummaryResource = classification;
+  }
+
+  isFieldValid(field: string): boolean {
+    return this.formsValidatorService.isFieldValid(this.taskForm, field);
+  }
+
+  updateDate($event) {
+    if (new Date(this.task.due).toISOString() !== $event) {
+      this.task.due = $event;
     }
+  }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.saveToggleTriggered && changes.saveToggleTriggered.currentValue !== changes.saveToggleTriggered.previousValue) {
-            this.validate();
+  private validate() {
+    this.formsValidatorService.formSubmitAttempt = true;
+    this.formsValidatorService
+      .validateFormInformation(this.taskForm, this.toogleValidationMap)
+      .then(value => {
+        if (value) {
+          this.formValid.emit(true);
         }
-    }
+      });
+  }
 
-    selectClassification(classification: Classification) {
-        this.task.classificationSummaryResource = classification;
-    }
+  private changedClassification(itemSelected: any) {
+    this.task.classificationSummaryResource = itemSelected;
+  }
 
-    isFieldValid(field: string): boolean {
-        return this.formsValidatorService.isFieldValid(this.taskForm, field);
-    }
-
-    updateDate($event) {
-        if (new Date(this.task.due).toISOString() !== $event) {
-            this.task.due = $event;
-        }
-    }
-
-    private validate() {
-        this.formsValidatorService.formSubmitAttempt = true;
-        this.formsValidatorService
-            .validateFormInformation(this.taskForm, this.toogleValidationMap)
-            .then(value => {
-                if (value) {
-                    this.formValid.emit(true);
-                }
-            });
-    }
-
-    private changedClassification(itemSelected: any) {
-        this.task.classificationSummaryResource = itemSelected;
-    }
-
-    private async getClassificationByDomain() {
-        this.requestInProgress = true;
-        this.classifications = (await this.classificationService.getClassificationsByDomain(this.domainService.getSelectedDomainValue()))
-            .classifications;
-        this.requestInProgress = false;
-    }
+  private async getClassificationByDomain() {
+    this.requestInProgress = true;
+    this.classifications = (await this.classificationService.getClassificationsByDomain(this.domainService.getSelectedDomainValue()))
+      .classifications;
+    this.requestInProgress = false;
+  }
 }

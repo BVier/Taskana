@@ -26,17 +26,15 @@ export class ClassificationsService {
   constructor(
     private httpClient: HttpClient,
     private classificationCategoriesService: ClassificationCategoriesService,
-    private domainService: DomainService) {
-  }
+    private domainService: DomainService
+  ) { }
 
   // GET
   getClassifications(): Observable<Array<Classification>> {
     return this.domainService.getSelectedDomain().pipe(
-      mergeMap(domain => {
-        return this.getClassificationObservable(this.httpClient.get<ClassificationResource>(
-          `${this.url}${TaskanaQueryParameters.getQueryParameters(this.classificationParameters(domain))}`));
-
-      }),
+      mergeMap(domain => this.getClassificationObservable(this.httpClient.get<ClassificationResource>(
+        `${this.url}${TaskanaQueryParameters.getQueryParameters(this.classificationParameters(domain))}`
+      ))),
       tap(() => {
         this.domainService.domainChangedComplete();
       })
@@ -48,7 +46,8 @@ export class ClassificationsService {
     if (this.lastDomain !== domain || !this.classificationResourcePromise || forceRefresh) {
       this.lastDomain = domain;
       this.classificationResourcePromise = this.httpClient.get<ClassificationResource>(
-        `${this.url}${TaskanaQueryParameters.getQueryParameters(this.classificationParameters(domain))}`).toPromise();
+        `${this.url}${TaskanaQueryParameters.getQueryParameters(this.classificationParameters(domain))}`
+      ).toPromise();
     }
     return this.classificationResourcePromise;
   }
@@ -116,9 +115,7 @@ export class ClassificationsService {
         classificationTypes]
     ).pipe(
       map(
-        (classification: any, classificationType: any) => {
-          return classification.classifications ? this.buildHierarchy(classification.classifications, classificationType) : [];
-        }
+        (classification: any, classificationType: any) => (classification.classifications ? this.buildHierarchy(classification.classifications, classificationType) : [])
       )
     )
   }
@@ -130,8 +127,8 @@ export class ClassificationsService {
     for (let index = 0, len = classifications.length; index < len; ++index) {
       const item = classifications[index];
       if (item.type === type) {
-        const parent = item.parentId,
-          target = !parent ? roots : (children[parent] || (children[parent] = []));
+        const parent = item.parentId;
+        const target = !parent ? roots : (children[parent] || (children[parent] = []));
 
         target.push(item);
       }

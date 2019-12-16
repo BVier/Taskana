@@ -35,7 +35,9 @@ export class DummyDetailComponent {
 describe('WorkbasketListToolbarComponent', () => {
   let component: WorkbasketListToolbarComponent;
   let fixture: ComponentFixture<WorkbasketListToolbarComponent>;
-  let debugElement, workbasketService, router;
+  let debugElement;
+  let workbasketService;
+  let router;
 
   const routes: Routes = [
     { path: ':id', component: DummyDetailComponent, outlet: 'detail' }
@@ -65,9 +67,10 @@ describe('WorkbasketListToolbarComponent', () => {
       debugElement = fixture.debugElement.nativeElement;
       component = fixture.componentInstance;
       component.workbaskets = new Array<WorkbasketSummary>(
-        new WorkbasketSummary('1', 'key1', 'NAME1', 'description 1', 'owner 1'));
+        new WorkbasketSummary('1', 'key1', 'NAME1', 'description 1', 'owner 1')
+      );
       component.workbaskets[0].markedForDeletion = false;
-      component.workbaskets[0]._links = new Links({ 'href': 'selfLink' });
+      component.workbaskets[0]._links = new Links({ href: 'selfLink' });
 
       fixture.detectChanges();
       done();
@@ -93,7 +96,7 @@ describe('WorkbasketListToolbarComponent', () => {
     let sort: SortingModel;
     const compareSort = new SortingModel();
 
-    component.performSorting.subscribe((value) => { sort = value })
+    component.performSorting.subscribe(value => { sort = value })
     component.sorting(compareSort);
     expect(sort).toBe(compareSort);
 
@@ -103,7 +106,7 @@ describe('WorkbasketListToolbarComponent', () => {
     let filter: FilterModel;
     const compareFilter = new FilterModel();
 
-    component.performFilter.subscribe((value) => { filter = value })
+    component.performFilter.subscribe(value => { filter = value })
     component.filtering(compareFilter);
     expect(filter).toBe(compareFilter);
   });

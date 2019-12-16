@@ -1,13 +1,7 @@
 
-import {
-    getTestBed,
-    TestBed,
-} from '@angular/core/testing';
+import {getTestBed, TestBed } from '@angular/core/testing';
 
-import {
-    BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
+import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
 
 import { TaskanaEngineServiceMock } from './services/taskana-engine/taskana-engine.mock.service';
 import { TaskanaEngineService } from './services/taskana-engine/taskana-engine.service';
@@ -28,21 +22,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 export const configureTests = (configure: (testBed: TestBed) => void) => {
-    const testBed = getTestBed();
+  const testBed = getTestBed();
 
-    if (testBed.platform == null) {
-        testBed.initTestEnvironment(
-            BrowserDynamicTestingModule,
-            platformBrowserDynamicTesting());
-    }
+  if (testBed.platform == null) {
+    testBed.initTestEnvironment(
+      BrowserDynamicTestingModule,
+      platformBrowserDynamicTesting()
+    );
+  }
 
-    configure(testBed);
-    testBed.configureTestingModule({
-        imports: [BrowserAnimationsModule, SharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, AngularSvgIconModule],
-        providers: [{ provide: TaskanaEngineService, useClass: TaskanaEngineServiceMock },
-        { provide: DomainService, useClass: DomainServiceMock }, CustomFieldsService, RemoveConfirmationService,
-            AlertService, GeneralModalService, RequestInProgressService, OrientationService, SelectedRouteService, FormsValidatorService]
-    });
+  configure(testBed);
+  testBed.configureTestingModule({
+    imports: [BrowserAnimationsModule, SharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, AngularSvgIconModule],
+    providers: [{ provide: TaskanaEngineService, useClass: TaskanaEngineServiceMock },
+      { provide: DomainService, useClass: DomainServiceMock }, CustomFieldsService, RemoveConfirmationService,
+      AlertService, GeneralModalService, RequestInProgressService, OrientationService, SelectedRouteService, FormsValidatorService]
+  });
 
-    return testBed.compileComponents().then(() => testBed);
+  return testBed.compileComponents().then(() => testBed);
 };

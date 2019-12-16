@@ -55,7 +55,7 @@ export class AccessItemsManagementComponent implements OnInit, OnDestroy {
   setAccessItemsGroups(accessItems: Array<AccessItemWorkbasket>) {
     const AccessItemsFormGroups = accessItems.map(accessItem => this.formBuilder.group(accessItem));
     AccessItemsFormGroups.map(accessItemGroup => {
-      accessItemGroup.controls['accessId'].setValidators(Validators.required);
+      accessItemGroup.controls.accessId.setValidators(Validators.required);
       for (const key of Object.keys(accessItemGroup.controls)) {
         accessItemGroup.controls[key].disable();
       }
@@ -63,13 +63,13 @@ export class AccessItemsManagementComponent implements OnInit, OnDestroy {
     const AccessItemsFormArray = this.formBuilder.array(AccessItemsFormGroups);
     if (!this.AccessItemsForm) { this.AccessItemsForm = this.formBuilder.group({}); }
     this.AccessItemsForm.setControl('accessItemsGroups', AccessItemsFormArray);
-    if (!this.AccessItemsForm.value['workbasketKeyFilter']) { this.AccessItemsForm.addControl('workbasketKeyFilter', new FormControl()) }
-    if (!this.AccessItemsForm.value['accessIdFilter']) { this.AccessItemsForm.addControl('accessIdFilter', new FormControl()) }
-  };
+    if (!this.AccessItemsForm.value.workbasketKeyFilter) { this.AccessItemsForm.addControl('workbasketKeyFilter', new FormControl()) }
+    if (!this.AccessItemsForm.value.accessIdFilter) { this.AccessItemsForm.addControl('accessIdFilter', new FormControl()) }
+  }
 
   get accessItemsGroups(): FormArray {
     return this.AccessItemsForm ? this.AccessItemsForm.get('accessItemsGroups') as FormArray : null;
-  };
+  }
 
   constructor(private formBuilder: FormBuilder,
     private customFieldsService: CustomFieldsService,
@@ -99,16 +99,15 @@ export class AccessItemsManagementComponent implements OnInit, OnDestroy {
           this.belongingGroups = accessIdsWithGroups.filter(item => item.accessId.includes(this.groupsKey));
           this.searchForAccessItemsWorkbaskets();
         },
-          error => {
-            this.requestInProgressService.setRequestInProgress(false);
-            this.generalModalService.triggerMessage(
-              new MessageModal(
-                'There was error while retrieving your access ids with groups',
-                error
-              )
+        error => {
+          this.requestInProgressService.setRequestInProgress(false);
+          this.generalModalService.triggerMessage(
+            new MessageModal(
+              'There was error while retrieving your access ids with groups',
+              error
             )
-          }
-        )
+          )
+        })
     }
   }
 
@@ -129,20 +128,20 @@ export class AccessItemsManagementComponent implements OnInit, OnDestroy {
       this.AccessItemsForm ? this.AccessItemsForm.value.accessIdFilter : undefined,
       this.AccessItemsForm ? this.AccessItemsForm.value.workbasketKeyFilter : undefined,
       this.sortModel,
-      true)
-      .subscribe((accessItemsResource: AccessItemsWorkbasketResource) => {
-        this.setAccessItemsGroups(accessItemsResource ? accessItemsResource.accessItems : []);
-        this.requestInProgressService.setRequestInProgress(false);
-      },
-        error => {
-          this.requestInProgressService.setRequestInProgress(false);
-          this.generalModalService.triggerMessage(
-            new MessageModal(
-              'There was error while retrieving your access items',
-              error
-            )
-          );
-        })
+      true
+    ).subscribe((accessItemsResource: AccessItemsWorkbasketResource) => {
+      this.setAccessItemsGroups(accessItemsResource ? accessItemsResource.accessItems : []);
+      this.requestInProgressService.setRequestInProgress(false);
+    },
+    error => {
+      this.requestInProgressService.setRequestInProgress(false);
+      this.generalModalService.triggerMessage(
+        new MessageModal(
+          'There was error while retrieving your access items',
+          error
+        )
+      );
+    })
 
   }
 
@@ -158,27 +157,28 @@ export class AccessItemsManagementComponent implements OnInit, OnDestroy {
   private onRemoveConfirmed() {
     this.requestInProgressService.setRequestInProgress(true);
     this.accessIdsService.removeAccessItemsPermissions(this.accessIdSelected)
-    .subscribe(
-      response => {
-        this.requestInProgressService.setRequestInProgress(false);
-        this.alertService.triggerAlert(
-          new AlertModel(
-            AlertType.SUCCESS,
-            `${this.accessIdSelected
-            } was removed successfully`
-          )
-        );
-        this.searchForAccessItemsWorkbaskets();
-    },
-    error => {
-      this.requestInProgressService.setRequestInProgress(false);
-      this.generalModalService.triggerMessage(
-        new MessageModal(
-          `You can't delete a group`,
-          error
-        )
+      .subscribe(
+        response => {
+          this.requestInProgressService.setRequestInProgress(false);
+          this.alertService.triggerAlert(
+            new AlertModel(
+              AlertType.SUCCESS,
+              `${this.accessIdSelected
+              } was removed successfully`
+            )
+          );
+          this.searchForAccessItemsWorkbaskets();
+        },
+        error => {
+          this.requestInProgressService.setRequestInProgress(false);
+          this.generalModalService.triggerMessage(
+            new MessageModal(
+              'You can\'t delete a group',
+              error
+            )
+          );
+        }
       );
-    });
   }
 
   private unSubscribe(subscription: Subscription): void {

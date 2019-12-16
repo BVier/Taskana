@@ -1,4 +1,3 @@
-// tslint:disable:max-line-length
 /**
  * Modules
  */
@@ -74,9 +73,7 @@ const DECLARATIONS = [
 ];
 
 export function startupServiceFactory(startupService: StartupService): () => Promise<any> {
-  return (): Promise<any> => {
-    return startupService.load()
-  };
+  return (): Promise<any> => startupService.load();
 }
 
 
@@ -115,5 +112,3 @@ export function startupServiceFactory(startupService: StartupService): () => Pro
 })
 export class AppModule {
 }
-
-// tslint:enable:max-line-length

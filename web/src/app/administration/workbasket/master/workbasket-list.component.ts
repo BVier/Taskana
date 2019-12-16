@@ -46,8 +46,8 @@ export class WorkbasketListComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private orientationService: OrientationService,
-    private importExportService: ImportExportService) {
-  }
+    private importExportService: ImportExportService
+  ) { }
 
   ngOnInit() {
     this.requestInProgress = true;
@@ -95,7 +95,8 @@ export class WorkbasketListComponent implements OnInit, OnDestroy {
 
   refreshWorkbasketList() {
     this.cards = this.orientationService.calculateNumberItemsList(
-      window.innerHeight, 72, 170 + this.toolbarElement.nativeElement.offsetHeight, false);
+      window.innerHeight, 72, 170 + this.toolbarElement.nativeElement.offsetHeight, false
+    );
     this.performRequest();
   }
 
@@ -106,7 +107,8 @@ export class WorkbasketListComponent implements OnInit, OnDestroy {
     this.workbasketServiceSubscription = this.workbasketService.getWorkBasketsSummary(
       true, this.sort.sortBy, this.sort.sortDirection, '',
       this.filterBy.filterParams.name, this.filterBy.filterParams.description, '', this.filterBy.filterParams.owner,
-      this.filterBy.filterParams.type, '', this.filterBy.filterParams.key, '')
+      this.filterBy.filterParams.type, '', this.filterBy.filterParams.key, ''
+    )
       .subscribe(resultList => {
         this.workbasketsResource = resultList;
         this.workbaskets = resultList.workbaskets;

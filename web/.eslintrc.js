@@ -17,28 +17,28 @@ module.exports = {
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "@typescript-eslint/indent": ['error', 2],
-    "max-len": ["off", { "code": 140, "ignorePattern": "import *" }], // smaller than 140?
+    "max-len": ["error", { "code": 140, "ignorePattern": "import *" }], // smaller than 140?
     "object-curly-newline": ["error", { "ImportDeclaration": "never" }],
     "quote-props": ["error", "as-needed"],
     "lines-between-class-members":  ["error", "always", { "exceptAfterSingleLine": true }],
     "comma-dangle": ["error", "only-multiline"],
-    "no-underscore-dangle": ["off", { "allow": ["_links", "__karma__"] }],
-    "no-param-reassign": ["off", { "props": false }],
+    "no-underscore-dangle": ["error", { "allow": ["_links", "__karma__"] }],
+    "no-param-reassign": ["error", { "props": false }],
 
     // all following rules SHOULD be removed
-    "class-methods-use-this": "off",
-    "import/extensions": "off",
-    "import/no-unresolved": "off",
-    "import/prefer-default-export": "off",
-    "max-classes-per-file": "off",
-    "@typescript-eslint/no-unused-vars": "off",
+    "class-methods-use-this": "error",
+    "import/extensions": "error",
+    "import/no-unresolved": "error",
+    "import/prefer-default-export": "error",
+    "max-classes-per-file": "error",
+    "@typescript-eslint/no-unused-vars": "error",
 
     // all following rules MUST be removed (mostly autofix)
-    "linebreak-style": ["off", "unix"], // own PR
-    "no-restricted-syntax": "off",
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/camelcase": "off",
-    "no-plusplus": "off",
-    "no-prototype-builtins": "off",
+    "linebreak-style": ["error", "unix"], // own PR
+    "no-restricted-syntax": "error",
+    "@typescript-eslint/no-use-before-define": "error",
+    "@typescript-eslint/camelcase": "error",
+    "no-plusplus": "error",
+    "no-prototype-builtins": "error",
   }
 };

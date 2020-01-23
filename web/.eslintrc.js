@@ -2,16 +2,8 @@ module.exports = {
   "extends": [
     "airbnb-typescript/base"
   ],
-  "env": {
-    "browser": true,
-    "node": true
-  },
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "tsconfig.json",
-  },
   "plugins": [
-        "@typescript-eslint",
         "@typescript-eslint/tslint"
   ],
   "rules": {
@@ -34,7 +26,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "error",
 
     // all following rules MUST be removed (mostly autofix)
-    "linebreak-style": ["error", "unix"], // own PR
+    "linebreak-style": ["off", "unix"], // own PR
     "no-restricted-syntax": "error",
     "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/camelcase": "error",

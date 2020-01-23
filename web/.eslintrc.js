@@ -7,15 +7,9 @@ module.exports = {
         "@typescript-eslint/tslint"
   ],
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
     "@typescript-eslint/indent": ['error', 2],
     "max-len": ["error", { "code": 140, "ignorePattern": "import *" }], // smaller than 140?
-    "object-curly-newline": ["error", { "ImportDeclaration": "never" }],
-    "quote-props": ["error", "as-needed"],
     "lines-between-class-members":  ["error", "always", { "exceptAfterSingleLine": true }],
-    "comma-dangle": ["error", "only-multiline"],
-    "no-underscore-dangle": ["error", { "allow": ["_links", "__karma__"] }],
-    "no-param-reassign": ["error", { "props": false }],
 
     // all following rules SHOULD be removed
     "class-methods-use-this": "error",
